@@ -1,6 +1,6 @@
 import { createSlice, current } from "@reduxjs/toolkit";
 
-const initialState = JSON.parse(localStorage.getItem("todos"));
+const initialState = JSON.parse(localStorage.getItem("todos")) || [];
 
 const addTodoReducer = createSlice({
     name: "todos",
