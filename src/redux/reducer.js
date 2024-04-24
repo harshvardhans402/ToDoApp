@@ -1,6 +1,6 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, current } from "@reduxjs/toolkit";
 
-const initialState = [];
+const initialState = JSON.parse(localStorage.getItem("todos"));
 
 const addTodoReducer = createSlice({
     name: "todos",
@@ -10,27 +10,40 @@ const addTodoReducer = createSlice({
         //Adding todos
         add: (state, action) => {
             state.push(action.payload);
-            return state;
+            localStorage.setItem("todos", JSON.stringify(state))
+
         },
         //remove todos
         remove: (state, action) => {
-            return state.filter((item) => item.id !== action.payload);
+            const rmstate = state.filter((item) => item.id !== action.payload)
+            localStorage.setItem("todos", JSON.stringify(rmstate))
+
+            return rmstate;
+
         },
         //update todos
         update: (state, action) => {
-            return state.map((todo) => {
+            const updatedstate = state.map((todo) => {
                 if (todo.id === action.payload.id) {
                     return {
                         ...todo,
                         item: action.payload.item,
+                        id: action.payload.id,
+                        completed: false
                     };
                 }
-                return todo;
+                else {
+                    return todo
+                }
+
+
             });
+            localStorage.setItem("todos", JSON.stringify(updatedstate))
+            return updatedstate;
         },
         //completed
         complete: (state, action) => {
-            return state.map((todo) => {
+            const comp = state.map((todo) => {
                 if (todo.id === action.payload) {
                     return {
                         ...todo,
@@ -38,7 +51,11 @@ const addTodoReducer = createSlice({
                     };
                 }
                 return todo;
+
             });
+            localStorage.setItem("todos", JSON.stringify(comp))
+            return comp;
+
         },
     },
 });

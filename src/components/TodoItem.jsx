@@ -14,7 +14,7 @@ const TodoItem = (props) => {
     };
 
     const update = (id, value, e) => {
-        if (e.which === 13) {
+        if (e.which == 13) {
             //here 13 is key code for enter key
             updateTodo({ id, item: value });
             inputRef.current.disabled = true;
@@ -22,11 +22,13 @@ const TodoItem = (props) => {
     };
     return (
         <div className="card" >
+
             <textarea
                 className="todo-input " style={{ backgroundColor: 'transparent', resize: 'vertical' }}
                 ref={inputRef}
                 disabled={inputRef}
                 defaultValue={item.item}
+
                 onKeyUp={(e) => update(item.id, inputRef.current.value, e)}
             // cols={60}
             // rows={2}
